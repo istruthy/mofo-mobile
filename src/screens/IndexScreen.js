@@ -1,28 +1,60 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
+const moment = require('moment');
 import { Context } from '../context/BlogContext';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
-const IndexScreen = () => {
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+const IndexScreen = ({ navigation }) => {
+  const { state, deleteBlogPost, getBlogPosts, getNews } = useContext(Context);
 
+
+
+  useEffect(() => {
+    // getBlogPosts();
+    getNews();
+    const listener = navigation.addListener('didFocus', () => {
+      // getBlogPosts();
+      getNews();
+    });
+
+    return () => {
+      listener.remove();
+    }
+  }, [])
 
   return <>
-    <Button title="Add Posts" onPress={addBlogPost} />
     <FlatList
       data={state}
-
       keyExtractor={(blogPost) => blogPost.title}
       renderItem={({ item }) => {
-        return (
+        const date = new Date(item.date).toString();
+        return (<TouchableOpacity onPress={() => navigation.navigate('Show', { id: item.id })}>
           <View style={styles.row} >
-            <Text style={styles.title} key={item.title}>{item.title} - {item.id}</Text>
-            <TouchableOpacity onPress={() => deleteBlogPost(item.id)}><Feather name="trash" style={styles.icon} /></TouchableOpacity>
+            <View style={styles.column} >
+              <View style={styles.sectionIcon}>
+                <Ionicons name="ios-globe" size={22} style={{ marginRight: 8 }} />
+                <Text style={styles.sectionTitle}>in the news</Text>
+              </View>
+              <Text style={styles.title} key={item.title}>{item.title}</Text>
+              <Text style={styles.date}>{moment(date).format('LL')}-{item.id}</Text>
+            </View>
+            {/* <TouchableOpacity onPress={() => deleteBlogPost(item.id)}><Feather name="trash" style={styles.icon} /></TouchableOpacity> */}
           </View>
+        </TouchableOpacity>
         );
       }}
     />
   </>
+};
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+        <Feather name="plus" size={30} />
+      </TouchableOpacity>
+    ),
+  };
 }
 
 const styles = StyleSheet.create({
@@ -30,16 +62,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderTopWidth: 1,
+    borderWidth: 1,
     borderColor: 'gray',
-    paddingHorizontal: 10
+    paddingHorizontal: 20,
+    margin: 10,
+  },
+  column: {
+    flexDirection: 'column',
   },
   title: {
-    fontSize: 18,
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 12,
 
   },
   icon: {
     fontSize: 24,
+  },
+  sectionTitle: {
+    textTransform: 'uppercase',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'grey',
+
+  },
+  sectionIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+
   }
 });
 
