@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { Context } from '../context/BlogContext';
+import IconBlock from '../components/IconBlock';
+
 
 const HomeScreen = () => {
+
+  const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
+
+
+  useEffect(() => {
+    getBlogPosts();
+    const listener = navigation.addListener('didFocus', () => {
+      getBlogPosts();
+    });
+
+    return () => {
+      listener.remove();
+    }
+  }, [])
 
   return (
     <>
@@ -17,13 +33,13 @@ const HomeScreen = () => {
         <View style={styles.quarterHeight}>
           <View style={styles.containerRow}>
             <View style={[styles.halfWidth, { backgroundColor: '#CCC' }]}><Text>One</Text></View>
-            <View style={styles.halfWidth}><FontAwesome5 name='globe-americas' style={styles.icon} /><Text>In The News</Text></View>
+            <IconBlock />
           </View>
         </View>
         <View style={[styles.quarterHeight, { backgroundColor: '#CCC' }]}>
           <View style={styles.containerRow}>
-            <View style={styles.halfWidth}><Text>Three</Text></View>
-            <View style={styles.halfWidth}><Text>Four</Text></View>
+            <IconBlock label="three" background="#e0e0e0" icon="globe-americas" />
+            <IconBlock />
           </View>
 
         </View>
@@ -65,6 +81,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
     alignContent: 'space-between',
+
   },
   headline: {
     fontSize: 32,

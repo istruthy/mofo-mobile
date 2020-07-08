@@ -1,10 +1,16 @@
 import createDataContext from './createDataContext';
 import jsonServer from '../api/jsonSerer';
+import mofoNews from '../api/mofoNews';
+import mofoContent from '../api/mofoContent';
 
 
 const blogReducer = (state, action) => {
   switch (action.type) {
-    case 'get_blogpost':
+    case 'get_news':
+      return action.payload;
+    case 'get_content':
+      return action.payload;
+    case 'get_content':
       return action.payload;
     case 'edit_blogpost':
       return state.map((blogPost) => {
@@ -23,6 +29,8 @@ const blogReducer = (state, action) => {
     //     title: action.payload.title,
     //     content: action.payload.content
     //   }];
+
+
     default:
       return state;
   }
@@ -32,6 +40,22 @@ const getBlogPosts = (dispatch) => {
   return async () => {
     const response = await jsonServer.get('/blogPosts');
     dispatch({ type: 'get_blogpost', payload: response.data });
+  }
+}
+
+const getNews = (dispatch) => {
+  return async () => {
+    const response = await mofoNews.get();
+    // console.log('get_news ', response.data);
+    dispatch({ type: 'get_news', payload: response.data });
+  }
+}
+
+const getContent = (dispatch) => {
+  return async (id) => {
+    const response = await mofoContent.get(id);
+    console.log('get_content ', response.data, id);
+    dispatch({ type: 'get_content', payload: response.data });
   }
 }
 
@@ -64,6 +88,6 @@ const editBlogPost = (dispatch) => {
 
 export const { Context, Provider } = createDataContext(
   blogReducer,
-  { addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts },
+  { addBlogPost, deleteBlogPost, editBlogPost, getBlogPosts, getNews, getContent },
   []
 );
