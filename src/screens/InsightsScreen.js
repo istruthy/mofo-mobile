@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,18 +8,25 @@ import {
   TouchableOpacity,
 } from 'react-native';
 const moment = require('moment');
-import { Context } from '../context/BlogContext';
+import mofo from '../api/mofo';
 import { Feather, Ionicons } from '@expo/vector-icons';
 
-const IndexScreen = ({ navigation }) => {
-  const { state, deleteBlogPost, getBlogPosts, getNews } = useContext(Context);
+const InsightsScreen = ({ navigation }) => {
+  const [state, setState] = useState([]);
+
+  const getInsights = async () => {
+    let response = await mofo.get(
+      `/content-wss?id=1&type=MoFo Publications&wss=insights`
+    );
+    let data = response.data;
+    console.log(data);
+    setState(data);
+  };
 
   useEffect(() => {
-    // getBlogPosts();
-    getNews();
+    getInsights();
     const listener = navigation.addListener('didFocus', () => {
-      // getBlogPosts();
-      getNews();
+      getInsights();
     });
 
     return () => {
@@ -31,7 +38,7 @@ const IndexScreen = ({ navigation }) => {
     <>
       <FlatList
         data={state}
-        keyExtractor={(blogPost) => blogPost.id}
+        keyExtractor={(insight) => insight.id}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
@@ -69,7 +76,7 @@ const IndexScreen = ({ navigation }) => {
   );
 };
 
-IndexScreen.navigationOptions = ({ navigation }) => {
+InsightsScreen.navigationOptions = ({ navigation }) => {
   return {
     headerRight: () => (
       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
@@ -118,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IndexScreen;
+export default InsightsScreen;

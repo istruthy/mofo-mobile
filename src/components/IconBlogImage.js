@@ -2,9 +2,10 @@ import React from 'react';
 import { Text, StyleSheet, ImageBackground } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-const IconBlock = ({ label, background, icon }) => {
+const IconBlockImage = ({ label, background, icon, backgroundImage }) => {
   return (
     <ImageBackground
+      source={backgroundImage}
       style={[
         styles.halfWidth,
         {
@@ -42,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default IconBlock;
+export default IconBlockImage;

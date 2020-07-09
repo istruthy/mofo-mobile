@@ -42,7 +42,7 @@ const getBlogPosts = (dispatch) => {
 const getNews = (dispatch) => {
   return async () => {
     const response = await mofo.get(
-      `/content-wss?id=1&type=MoFo News&wss=news`
+      `/content-wss?id=1&type=MoFo Publications&wss=insights`
     );
     // console.log('get_news ', response.data);
     dispatch({ type: 'get_news', payload: response.data });

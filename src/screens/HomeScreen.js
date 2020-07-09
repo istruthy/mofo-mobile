@@ -1,47 +1,83 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Context } from '../context/BlogContext';
+import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+// import { Context } from '../context/BlogContext';
 import IconBlock from '../components/IconBlock';
+import IconBlockImage from '../components/IconBlogImage';
+const insightsImage = require('../../assets/insights.jpg');
+const newsImage = require('../../assets/news.jpg');
 
-
-const HomeScreen = () => {
-
-  const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
-
-
+const HomeScreen = ({ navigation }) => {
   useEffect(() => {
-    getBlogPosts();
-    const listener = navigation.addListener('didFocus', () => {
-      getBlogPosts();
-    });
-
-    return () => {
-      listener.remove();
-    }
-  }, [])
+    // getBlogPosts();
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getBlogPosts();
+    // });
+    // return () => {
+    // }
+  }, []);
 
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.halfHeight}>
-          <View style={styles.featuredContent} >
-            <Text style={styles.headline}>&ldquo;We will not be casual observers to injustice. We will do more, and we will do it together.&rdquo;</Text>
-            <Text style={styles.byline}>- Larren M. Nashelsky, Chair of Morrison &amp; Foerster</Text>
-            <Text style={styles.buttonStyle}>READ A MESSAGE FROM OUR CHAIR</Text>
+        <ImageBackground
+          style={styles.halfHeight}
+          source={{
+            uri: 'https://media2.mofo.com/images/200625-equality-home-page.jpg',
+          }}
+        >
+          <View style={styles.featuredContent}>
+            <Text style={styles.headline}>
+              &ldquo;We will not be casual observers to injustice. We will do
+              more, and we will do it together.&rdquo;
+            </Text>
+            <Text style={styles.byline}>
+              - Larren M. Nashelsky, Chair of Morrison &amp; Foerster
+            </Text>
+            <Text style={styles.buttonStyle}>
+              READ A MESSAGE FROM OUR CHAIR
+            </Text>
           </View>
-        </View>
+        </ImageBackground>
+
         <View style={styles.quarterHeight}>
           <View style={styles.containerRow}>
-            <View style={[styles.halfWidth, { backgroundColor: '#CCC' }]}><Text>One</Text></View>
-            <IconBlock />
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() =>
+                navigation.navigate('Insights', { id: 'insights' })
+              }
+            >
+              <IconBlockImage
+                label="Insights"
+                backgroundImage={insightsImage}
+                icon="eye"
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() => navigation.navigate('Index', { id: 'news' })}
+            >
+              <IconBlockImage
+                label="In The News"
+                background="#fff"
+                icon="globe-americas"
+                backgroundImage={newsImage}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={[styles.quarterHeight, { backgroundColor: '#CCC' }]}>
           <View style={styles.containerRow}>
-            <IconBlock label="three" background="#e0e0e0" icon="globe-americas" />
-            <IconBlock />
+            <IconBlock label="Podcasts" background="#000" icon="microphone" />
+            <IconBlock label="Blogs" background="#000" icon="newspaper" />
           </View>
-
         </View>
       </View>
     </>
@@ -59,18 +95,15 @@ const styles = StyleSheet.create({
   },
   halfHeight: {
     flex: 2,
-    backgroundColor: '#FF3366',
+    flexDirection: 'column',
   },
   halfWidth: {
     backgroundColor: '#FFF',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-
   },
   quarterHeight: {
     flex: 1,
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
   icon: {
     fontSize: 63,
@@ -78,23 +111,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   featuredContent: {
-    marginHorizontal: 20,
-    marginVertical: 20,
-    alignContent: 'space-between',
-
+    justifyContent: 'space-around',
+    flex: 1,
   },
   headline: {
     fontSize: 32,
+    color: '#fff',
     fontFamily: 'Georgia',
     fontWeight: '600',
-    marginBottom: 10,
   },
   byline: {
     fontSize: 20,
-    marginBottom: 10,
+    color: '#fff',
   },
   buttonStyle: {
-    borderColor: '#000',
+    borderColor: '#FFF',
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -102,9 +133,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: '800',
     textAlign: 'center',
-    marginVertical: 10,
-
-  }
+    color: '#fff',
+  },
 });
 
 export default HomeScreen;
