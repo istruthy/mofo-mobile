@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Header from '../components/Header';
 // import { Context } from '../context/BlogContext';
 import IconBlock from '../components/IconBlock';
 import IconBlockImage from '../components/IconBlogImage';
@@ -23,7 +25,11 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <>
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <Header navigation={navigation} />
       <View style={styles.container}>
         <ImageBackground
           style={styles.halfHeight}
@@ -50,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.halfWidth}
               onPress={() =>
-                navigation.navigate('Insights', { id: 'insights' })
+                navigation.navigate('InsightsScreen', { id: 'insights' })
               }
             >
               <IconBlockImage
@@ -62,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.halfWidth}
-              onPress={() => navigation.navigate('Index', { id: 'news' })}
+              onPress={() => navigation.navigate('IndexScreen', { id: 'news' })}
             >
               <IconBlockImage
                 label="In The News"
@@ -73,14 +79,18 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={[styles.quarterHeight, { backgroundColor: '#CCC' }]}>
+        <View style={styles.quarterHeight}>
           <View style={styles.containerRow}>
-            <IconBlock label="Podcasts" background="#000" icon="microphone" />
-            <IconBlock label="Blogs" background="#000" icon="newspaper" />
+            <IconBlock
+              label="Podcasts"
+              background="#39A9C3"
+              icon="microphone"
+            />
+            <IconBlock label="Blogs" background="#001232" icon="newspaper" />
           </View>
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -88,6 +98,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#184492',
   },
   containerRow: {
     flex: 1,
@@ -113,6 +124,7 @@ const styles = StyleSheet.create({
   featuredContent: {
     justifyContent: 'space-around',
     flex: 1,
+    margin: 20,
   },
   headline: {
     fontSize: 32,

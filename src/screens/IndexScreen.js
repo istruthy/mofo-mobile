@@ -7,18 +7,19 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const moment = require('moment');
 import { Context } from '../context/BlogContext';
 import { Feather, Ionicons } from '@expo/vector-icons';
+import Header from '../components/Header';
 
 const IndexScreen = ({ navigation }) => {
-  const { state, deleteBlogPost, getBlogPosts, getNews } = useContext(Context);
+  console.log('navigation ', navigation);
+  const { state, getNews } = useContext(Context);
 
   useEffect(() => {
-    // getBlogPosts();
     getNews();
     const listener = navigation.addListener('didFocus', () => {
-      // getBlogPosts();
       getNews();
     });
 
@@ -28,7 +29,11 @@ const IndexScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <>
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <Header navigation={navigation} label="In The News" />
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.id}
@@ -36,7 +41,12 @@ const IndexScreen = ({ navigation }) => {
           const date = new Date(item.date).toString();
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Show', { id: item.id })}
+              onPress={() =>
+                navigation.navigate('ShowScreen', {
+                  id: item.id,
+                  label: 'In The News',
+                })
+              }
             >
               <View style={styles.row}>
                 <View style={styles.column}>
@@ -59,25 +69,24 @@ const IndexScreen = ({ navigation }) => {
                     {moment(date).format('DD MMM YY')}
                   </Text>
                 </View>
-                {/* <TouchableOpacity onPress={() => deleteBlogPost(item.id)}><Feather name="trash" style={styles.icon} /></TouchableOpacity> */}
               </View>
             </TouchableOpacity>
           );
         }}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
-IndexScreen.navigationOptions = ({ navigation }) => {
-  return {
-    headerRight: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-        <Feather name="plus" size={30} />
-      </TouchableOpacity>
-    ),
-  };
-};
+// IndexScreen.navigationOptions = ({ navigation }) => {
+//   return {
+//     headerRight: () => (
+//       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+//         <Feather name="plus" size={30} />
+//       </TouchableOpacity>
+//     ),
+//   };
+// };
 
 const styles = StyleSheet.create({
   row: {
@@ -115,6 +124,9 @@ const styles = StyleSheet.create({
   },
   date: {
     color: 'grey',
+  },
+  container: {
+    flexDirection: 'column',
   },
 });
 

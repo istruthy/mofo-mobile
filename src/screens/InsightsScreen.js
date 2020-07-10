@@ -4,10 +4,11 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Button,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const moment = require('moment');
+import Header from '../components/Header';
 import mofo from '../api/mofo';
 import { Feather, Ionicons } from '@expo/vector-icons';
 
@@ -19,7 +20,6 @@ const InsightsScreen = ({ navigation }) => {
       `/content-wss?id=1&type=MoFo Publications&wss=insights`
     );
     let data = response.data;
-    console.log(data);
     setState(data);
   };
 
@@ -35,15 +35,19 @@ const InsightsScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <>
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
+    >
+      <Header navigation={navigation} />
       <FlatList
         data={state}
-        keyExtractor={(insight) => insight.id}
+        keyExtractor={(insight) => insight.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Show', { id: item.id })}
+              onPress={() => navigation.navigate('ShowScreen', { id: item.id })}
             >
               <View style={styles.row}>
                 <View style={styles.column}>
@@ -66,25 +70,24 @@ const InsightsScreen = ({ navigation }) => {
                     {moment(date).format('DD MMM YY')}
                   </Text>
                 </View>
-                {/* <TouchableOpacity onPress={() => deleteBlogPost(item.id)}><Feather name="trash" style={styles.icon} /></TouchableOpacity> */}
               </View>
             </TouchableOpacity>
           );
         }}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
-InsightsScreen.navigationOptions = ({ navigation }) => {
-  return {
-    headerRight: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-        <Feather name="plus" size={30} />
-      </TouchableOpacity>
-    ),
-  };
-};
+// InsightsScreen.navigationOptions = ({ navigation }) => {
+//   return {
+//     headerRight: () => (
+//       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+//         <Feather name="plus" size={30} />
+//       </TouchableOpacity>
+//     ),
+//   };
+// };
 
 const styles = StyleSheet.create({
   row: {
@@ -122,6 +125,9 @@ const styles = StyleSheet.create({
   },
   date: {
     color: 'grey',
+  },
+  container: {
+    flexDirection: 'column',
   },
 });
 
