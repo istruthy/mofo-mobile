@@ -12,12 +12,12 @@ import Header from '../components/Header';
 import mofo from '../api/mofo';
 import { Feather, Ionicons } from '@expo/vector-icons';
 
-const InsightsScreen = ({ navigation }) => {
+const PodcastsScreen = ({ navigation }) => {
   const [state, setState] = useState([]);
 
   const getInsights = async () => {
     let response = await mofo.get(
-      `/content-wss?id=1&type=MoFo Publications&wss=insights&cid=23461`
+      `/content-wss?id=1&type=MoFo Multimedia&wss=video-audio&cid=23711`
     );
     let data = response.data;
     setState(data);
@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'column',
+    flex: 1,
   },
 });
 
-export default InsightsScreen;
+export default PodcastsScreen;

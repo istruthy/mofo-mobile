@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "blog-app",
-    "slug": "blog-app",
+    "name": "mofo-mobile",
+    "slug": "mofo-mobile",
     "version": "1.0.0",
+
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -15,7 +16,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.eenymeenymobile.mofo",
+      "buildNumber": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"

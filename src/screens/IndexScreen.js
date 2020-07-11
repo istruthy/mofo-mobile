@@ -14,7 +14,6 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 
 const IndexScreen = ({ navigation }) => {
-  console.log('navigation ', navigation);
   const { state, getNews } = useContext(Context);
 
   useEffect(() => {
@@ -127,6 +126,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'column',
+    flex: 1,
   },
 });
 

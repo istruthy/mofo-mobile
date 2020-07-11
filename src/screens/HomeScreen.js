@@ -11,6 +11,7 @@ import Header from '../components/Header';
 // import { Context } from '../context/BlogContext';
 import IconBlock from '../components/IconBlock';
 import IconBlockImage from '../components/IconBlogImage';
+import HeroBlock from '../components/HeroBlock';
 const insightsImage = require('../../assets/insights.jpg');
 const newsImage = require('../../assets/news.jpg');
 
@@ -31,25 +32,7 @@ const HomeScreen = ({ navigation }) => {
     >
       <Header navigation={navigation} />
       <View style={styles.container}>
-        <ImageBackground
-          style={styles.halfHeight}
-          source={{
-            uri: 'https://media2.mofo.com/images/200625-equality-home-page.jpg',
-          }}
-        >
-          <View style={styles.featuredContent}>
-            <Text style={styles.headline}>
-              &ldquo;We will not be casual observers to injustice. We will do
-              more, and we will do it together.&rdquo;
-            </Text>
-            <Text style={styles.byline}>
-              - Larren M. Nashelsky, Chair of Morrison &amp; Foerster
-            </Text>
-            <Text style={styles.buttonStyle}>
-              READ A MESSAGE FROM OUR CHAIR
-            </Text>
-          </View>
-        </ImageBackground>
+        <HeroBlock />
 
         <View style={styles.quarterHeight}>
           <View style={styles.containerRow}>
@@ -81,12 +64,24 @@ const HomeScreen = ({ navigation }) => {
         </View>
         <View style={styles.quarterHeight}>
           <View style={styles.containerRow}>
-            <IconBlock
-              label="Podcasts"
-              background="#39A9C3"
-              icon="microphone"
-            />
-            <IconBlock label="Blogs" background="#001232" icon="newspaper" />
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() =>
+                navigation.navigate('PodcastsScreen', { id: 'news' })
+              }
+            >
+              <IconBlock
+                label="Podcasts"
+                background="#39A9C3"
+                icon="microphone"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() => navigation.navigate('BlogsScreen', { id: 'news' })}
+            >
+              <IconBlock label="Blogs" background="#001232" icon="newspaper" />
+            </TouchableOpacity>
           </View>
         </View>
       </View>

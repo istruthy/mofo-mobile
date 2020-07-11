@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "expo": "~38.0.8",
+    "expo-analytics": "^1.0.15",
     "expo-status-bar": "^1.0.2",
     "moment": "^2.27.0",
     "react": "~16.11.0",

@@ -12,12 +12,12 @@ import Header from '../components/Header';
 import mofo from '../api/mofo';
 import { Feather, Ionicons } from '@expo/vector-icons';
 
-const InsightsScreen = ({ navigation }) => {
+const EventsScreen = ({ navigation }) => {
   const [state, setState] = useState([]);
 
   const getInsights = async () => {
     let response = await mofo.get(
-      `/content-wss?id=1&type=MoFo Publications&wss=insights&cid=23461`
+      `/content-wss?id=1&type=MoFo Event&wss=events&cid=23471`
     );
     let data = response.data;
     setState(data);
@@ -32,7 +32,7 @@ const InsightsScreen = ({ navigation }) => {
     return () => {
       listener.remove();
     };
-  }, []);
+  }, [id]);
 
   return (
     <SafeAreaView
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InsightsScreen;
+export default EventsScreen;

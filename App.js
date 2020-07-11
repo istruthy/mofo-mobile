@@ -15,9 +15,9 @@ import LayoutScreen from './src/screens/LayoutScreen';
 import EditScreen from './src/screens/EditScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import InsightsScreen from './src/screens/InsightsScreen';
-import BlogScreen from './src/screens/BlogScreen';
-import PodcastScreen from './src/screens/PodcastScreen';
-import EventScreen from './src/screens/EventScreen';
+import BlogsScreen from './src/screens/BlogsScreen';
+import PodcastsScreen from './src/screens/PodcastsScreen';
+import EventsScreen from './src/screens/EventsScreen';
 import { Ionicons } from '@expo/vector-icons';
 const navigator = createDrawerNavigator(
   {
@@ -66,7 +66,7 @@ const navigator = createDrawerNavigator(
       screen: IndexScreen,
     },
 
-    BlogScreen: {
+    BlogsScreen: {
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Ionicons
@@ -76,10 +76,10 @@ const navigator = createDrawerNavigator(
         ),
         drawerLabel: 'Blogs',
       },
-      screen: BlogScreen,
+      screen: BlogsScreen,
     },
 
-    PodcastScreen: {
+    PodcastsScreen: {
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Ionicons
@@ -89,10 +89,10 @@ const navigator = createDrawerNavigator(
         ),
         drawerLabel: 'Podcasts',
       },
-      screen: PodcastScreen,
+      screen: PodcastsScreen,
     },
 
-    EventScreen: {
+    EventsScreen: {
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Ionicons
@@ -102,7 +102,7 @@ const navigator = createDrawerNavigator(
         ),
         drawerLabel: 'Events',
       },
-      screen: EventScreen,
+      screen: EventsScreen,
     },
   },
 
