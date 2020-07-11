@@ -15,7 +15,7 @@ import mofo from '../api/mofo';
 import HTML from 'react-native-render-html';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 
-const ShowScreen = ({ navigation }) => {
+const VenueScreen = ({ navigation }) => {
   const [content, setContent] = useState([]);
   const id = navigation.getParam('id');
   const label = navigation.getParam('label');
@@ -66,7 +66,6 @@ const ShowScreen = ({ navigation }) => {
             p: { fontSize: 16, lineHeight: 28, marginBottom: 20 },
             a: { fontSize: 16, lineHeight: 28 },
             h5: { fontSize: 18, fontWeight: 'bold' },
-            li: { fontSize: 16, lineHeight: 28 },
           }}
           style={{ p: { fontSize: 20 } }}
           onLinkPress={(evt, href) => {
@@ -144,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowScreen;
+export default VenueScreen;

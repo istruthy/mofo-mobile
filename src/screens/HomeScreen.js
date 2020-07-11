@@ -1,50 +1,91 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Context } from '../context/BlogContext';
+import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Header from '../components/Header';
+// import { Context } from '../context/BlogContext';
 import IconBlock from '../components/IconBlock';
+import IconBlockImage from '../components/IconBlogImage';
+import HeroBlock from '../components/HeroBlock';
+const insightsImage = require('../../assets/insights.jpg');
+const newsImage = require('../../assets/news.jpg');
 
-
-const HomeScreen = () => {
-
-  const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
-
-
+const HomeScreen = ({ navigation }) => {
   useEffect(() => {
-    getBlogPosts();
-    const listener = navigation.addListener('didFocus', () => {
-      getBlogPosts();
-    });
-
-    return () => {
-      listener.remove();
-    }
-  }, [])
+    // getBlogPosts();
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getBlogPosts();
+    // });
+    // return () => {
+    // }
+  }, []);
 
   return (
-    <>
+    <SafeAreaView
+      style={styles.container}
+      forceInset={{ top: 'always', horizontal: 'never' }}
+    >
+      <Header navigation={navigation} />
       <View style={styles.container}>
-        <View style={styles.halfHeight}>
-          <View style={styles.featuredContent} >
-            <Text style={styles.headline}>&ldquo;We will not be casual observers to injustice. We will do more, and we will do it together.&rdquo;</Text>
-            <Text style={styles.byline}>- Larren M. Nashelsky, Chair of Morrison &amp; Foerster</Text>
-            <Text style={styles.buttonStyle}>READ A MESSAGE FROM OUR CHAIR</Text>
+        <HeroBlock />
+
+        <View style={styles.quarterHeight}>
+          <View style={styles.containerRow}>
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() =>
+                navigation.navigate('InsightsScreen', { id: 'insights' })
+              }
+            >
+              <IconBlockImage
+                label="Insights"
+                backgroundImage={insightsImage}
+                icon="eye"
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() => navigation.navigate('IndexScreen', { id: 'news' })}
+            >
+              <IconBlockImage
+                label="In The News"
+                background="#fff"
+                icon="globe-americas"
+                backgroundImage={newsImage}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.quarterHeight}>
           <View style={styles.containerRow}>
-            <View style={[styles.halfWidth, { backgroundColor: '#CCC' }]}><Text>One</Text></View>
-            <IconBlock />
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() =>
+                navigation.navigate('PodcastsScreen', { id: 'news' })
+              }
+            >
+              <IconBlock
+                label="Podcasts"
+                background="#39A9C3"
+                icon="microphone"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.halfWidth}
+              onPress={() => navigation.navigate('BlogsScreen', { id: 'news' })}
+            >
+              <IconBlock label="Blogs" background="#001232" icon="newspaper" />
+            </TouchableOpacity>
           </View>
-        </View>
-        <View style={[styles.quarterHeight, { backgroundColor: '#CCC' }]}>
-          <View style={styles.containerRow}>
-            <IconBlock label="three" background="#e0e0e0" icon="globe-americas" />
-            <IconBlock />
-          </View>
-
         </View>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -52,6 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#184492',
   },
   containerRow: {
     flex: 1,
@@ -59,18 +101,15 @@ const styles = StyleSheet.create({
   },
   halfHeight: {
     flex: 2,
-    backgroundColor: '#FF3366',
+    flexDirection: 'column',
   },
   halfWidth: {
     backgroundColor: '#FFF',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-
   },
   quarterHeight: {
     flex: 1,
-    backgroundColor: '#000'
+    backgroundColor: '#000',
   },
   icon: {
     fontSize: 63,
@@ -78,23 +117,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   featuredContent: {
-    marginHorizontal: 20,
-    marginVertical: 20,
-    alignContent: 'space-between',
-
+    justifyContent: 'space-around',
+    flex: 1,
+    margin: 20,
   },
   headline: {
     fontSize: 32,
+    color: '#fff',
     fontFamily: 'Georgia',
     fontWeight: '600',
-    marginBottom: 10,
   },
   byline: {
     fontSize: 20,
-    marginBottom: 10,
+    color: '#fff',
   },
   buttonStyle: {
-    borderColor: '#000',
+    borderColor: '#FFF',
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -102,9 +140,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: '800',
     textAlign: 'center',
-    marginVertical: 10,
-
-  }
+    color: '#fff',
+  },
 });
 
 export default HomeScreen;

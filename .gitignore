@@ -9,7 +9,8 @@ npm-debug.*
 *.orig.*
 web-build/
 *.txt
-# api/*
+api/*
+*.vtl
 
 # macOS
 .DS_Store

@@ -1,51 +1,53 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 const moment = require('moment');
-import { Context } from '../context/BlogContext';
-import { Feather, Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
+import mofo from '../api/mofo';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
-const IndexScreen = ({ navigation }) => {
-  const { state, getNews } = useContext(Context);
+const EventsScreen = ({ navigation }) => {
+  const [state, setState] = useState([]);
+
+  const getInsights = async () => {
+    let response = await mofo.get(
+      `/content-wss?id=1&type=MoFo Event&wss=events&cid=23471`
+    );
+    let data = response.data;
+    setState(data);
+  };
 
   useEffect(() => {
-    getNews();
+    getInsights();
     const listener = navigation.addListener('didFocus', () => {
-      getNews();
+      getInsights();
     });
 
     return () => {
       listener.remove();
     };
-  }, []);
+  }, [id]);
 
   return (
     <SafeAreaView
       style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never' }}
+      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
     >
-      <Header navigation={navigation} label="In The News" />
+      <Header navigation={navigation} />
       <FlatList
         data={state}
-        keyExtractor={(blogPost) => blogPost.id}
+        keyExtractor={(insight) => insight.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('ShowScreen', {
-                  id: item.id,
-                  label: 'In The News',
-                })
-              }
+              onPress={() => navigation.navigate('ShowScreen', { id: item.id })}
             >
               <View style={styles.row}>
                 <View style={styles.column}>
@@ -77,7 +79,7 @@ const IndexScreen = ({ navigation }) => {
   );
 };
 
-// IndexScreen.navigationOptions = ({ navigation }) => {
+// InsightsScreen.navigationOptions = ({ navigation }) => {
 //   return {
 //     headerRight: () => (
 //       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
@@ -126,8 +128,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'column',
-    flex: 1,
   },
 });
 
-export default IndexScreen;
+export default EventsScreen;
