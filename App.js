@@ -86,13 +86,13 @@ const AppTabs = () => {
   );
 };
 
-const NewsStack = createStackNavigator();
-const NewsParent = () => {
+const InsightDetailStack = createStackNavigator();
+const InsightsDetail = () => {
   return (
-    <NewsStack.Navigator>
-      <NewsStack.Screen
-        name="News"
-        component={NewsDetail}
+    <InsightDetailStack.Navigator>
+      <InsightDetailStack.Screen
+        name="Insights"
+        component={InsightsScreen}
         options={({ navigation, route }) => ({
           headerLeft: (props) => (
             <HeaderBackButton
@@ -116,63 +116,24 @@ const NewsParent = () => {
           ),
         })}
       />
-    </NewsStack.Navigator>
-  );
-};
-
-const InsightParentStack = createStackNavigator();
-const InsightParent = () => {
-  return (
-    <InsightParentStack.Navigator>
-      <InsightParentStack.Screen
-        name="Insights"
-        component={InsightsDetail} //{InsightsScreen}
-        options={{
+      <InsightDetailStack.Screen
+        name="Show"
+        component={ShowScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'Insights',
           headerStyle: {
             backgroundColor: '#184492',
           },
-          // headerLeft: ({ navigation: { goBack } }) => (
-          //   <HeaderBackButton onPress={() => goBack()} />
-          // ),
-          // title: ({ route }) => ({ title: route.params.name }),
           headerTintColor: '#fff',
-          // headerLeft: (props) => <LogoTitle {...props} />,
-          headerRight: () => (
-            <Button
-              onPress={({ navigation }) => navigation.openDrawer()}
-              title="Info"
-              color="#FFF"
-            />
-          ),
-        }}
+        })}
       />
-    </InsightParentStack.Navigator>
-  );
-};
-
-const Insight = createStackNavigator();
-const InsightsDetail = () => {
-  return (
-    <Insight.Navigator>
-      <Insight.Screen
-        name="InsightsScreen"
-        component={InsightsScreen}
-        // options={({ navigation, route }) => ({
-        //   headerLeft: (props) => <LogoTitle {...props} />,
-        // })}
-        // options={{
-        //   headerLeft: ({ navigation: { goBack } }) => (
-        //     <HeaderBackButton onPress={() => goBack()} />
-        //   ),
-        // }}
-      />
-      <Insight.Screen
-        name="Show"
-        component={ShowScreen}
-        options={{ title: 'Detail' }}
-        //options={({ route }) => ({ title: route.params.name })}
-      />
-    </Insight.Navigator>
+    </InsightDetailStack.Navigator>
   );
 };
 
@@ -181,15 +142,47 @@ const NewsDetail = () => {
   return (
     <NewsDetailStack.Navigator>
       <NewsDetailStack.Screen
-        name="IndexScreen"
+        name="In The News"
         component={IndexScreen}
-        options={{ title: 'List' }}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          headerRight: () => (
+            <Ionicons
+              name="md-menu"
+              size={28}
+              color="#FFF"
+              style={{ marginHorizontal: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
       />
       <NewsDetailStack.Screen
         name="Show"
         component={ShowScreen}
-        options={{ title: 'Detail' }}
-        //options={({ route }) => ({ title: route.params.name })}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'In The News',
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+        })}
       />
     </NewsDetailStack.Navigator>
   );
@@ -210,11 +203,13 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen name="Home" component={AppTabs} />
-          <Drawer.Screen name="Insights" component={InsightParent} />
-          <Drawer.Screen name="News" component={NewsParent} />
+          <Drawer.Screen name="Insights" component={InsightsDetail} />
+          <Drawer.Screen name="News" component={NewsDetail} />
         </Drawer.Navigator>
         {/* <AppTabs /> */}
       </NavigationContainer>
     </Provider>
   );
 }
+
+// navigation.popToTop();

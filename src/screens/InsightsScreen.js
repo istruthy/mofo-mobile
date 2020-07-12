@@ -35,12 +35,22 @@ const InsightsScreen = ({ navigation, route }) => {
   }, []);
 
   const handleOnPress = (id) => {
+    // navigation.reset({
+    //   routes: [{ name: LOGIN_SCREEN }]
+    // });
     // navigation.setOptions({ title: 'hello' });
-    navigation.navigate('Insights', {
-      screen: 'Show',
+    navigation.navigate('Show', {
+      // screen: 'Show',
       params: { id: id },
     });
   };
+
+  // console.log('news');
+  // // navigation.setOptions({ title: 'Back' });
+  // navigation.navigate('Show', {
+  //   // screen: 'Show',
+  //   params: { id: id },
+  // });
 
   return (
     <>

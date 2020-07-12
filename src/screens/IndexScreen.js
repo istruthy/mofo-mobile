@@ -4,34 +4,28 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Button,
   TouchableOpacity,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 const moment = require('moment');
 import { Context } from '../context/BlogContext';
-import { Feather, Ionicons } from '@expo/vector-icons';
-// import Header from '../components/Header';
+import { Ionicons } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation, route }) => {
   const { state, getNews } = useContext(Context);
-  console.log('route indexScreen', route);
+
   useEffect(() => {
     getNews();
     // const listener = navigation.addListener('didFocus', () => {
     //   getNews();
     // });
-
     // return () => {
     //   listener.remove();
     // };
   }, []);
 
   const handleOnPress = (id) => {
-    console.log('news');
-    // navigation.setOptions({ title: 'Back' });
-    navigation.push('News', {
-      screen: 'Show',
+    navigation.navigate('Show', {
       params: { id: id },
     });
   };
