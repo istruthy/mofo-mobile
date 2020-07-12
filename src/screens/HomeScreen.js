@@ -26,11 +26,8 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never' }}
-    >
-      <Header navigation={navigation} />
+    <>
+      {/* <Header navigation={navigation} /> */}
       <View style={styles.container}>
         <HeroBlock />
 
@@ -39,7 +36,10 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.halfWidth}
               onPress={() =>
-                navigation.navigate('InsightsScreen', { id: 'insights' })
+                navigation.navigate('Insights', {
+                  screen: 'InsightsScreen',
+                  // params: { id: 'news' },
+                })
               }
             >
               <IconBlockImage
@@ -51,7 +51,11 @@ const HomeScreen = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.halfWidth}
-              onPress={() => navigation.navigate('IndexScreen', { id: 'news' })}
+              onPress={() =>
+                navigation.navigate('News', {
+                  screen: 'IndexScreen',
+                })
+              }
             >
               <IconBlockImage
                 label="In The News"
@@ -85,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 

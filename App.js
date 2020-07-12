@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Button, Image } from 'react-native';
 
-import { createAppContainer } from 'react-navigation';
-import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createStackNavigator } from 'react-navigation-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import DrawerNavigator from './src/components/DrawerNavigator';
 // https://github.com/hmajid2301/articles/blob/master/11.%20React%20Navigation%20with%20React%20Native/source_code/src/MainApp.js
 import IndexScreen from './src/screens/IndexScreen';
 import { Provider } from './src/context/BlogContext';
@@ -19,113 +18,120 @@ import BlogsScreen from './src/screens/BlogsScreen';
 import PodcastsScreen from './src/screens/PodcastsScreen';
 import EventsScreen from './src/screens/EventsScreen';
 import { Ionicons } from '@expo/vector-icons';
-const navigator = createDrawerNavigator(
-  {
-    Home: {
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-home"
-            style={[styles.icon, { color: tintColor, fontSize: 22 }]}
-          />
-        ),
-        drawerLabel: 'Home',
-      },
-      screen: HomeScreen,
-    },
 
-    InsightsScreen: {
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons name="md-eye" style={{ color: tintColor, fontSize: 22 }} />
-        ),
-        drawerLabel: 'Insights',
-      },
-      screen: InsightsScreen,
-    },
+const HomeStack = createStackNavigator();
 
-    ShowScreen: {
-      navigationOptions: ({ navigation }) => {
-        return {
-          drawerLabel: () => null,
-        };
-      },
-      screen: ShowScreen,
-    },
-
-    IndexScreen: {
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-globe"
-            style={{ color: tintColor, fontSize: 22 }}
-          />
-        ),
-        drawerLabel: 'In The News',
-      },
-      screen: IndexScreen,
-    },
-
-    BlogsScreen: {
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-globe"
-            style={{ color: tintColor, fontSize: 22 }}
-          />
-        ),
-        drawerLabel: 'Blogs',
-      },
-      screen: BlogsScreen,
-    },
-
-    PodcastsScreen: {
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-globe"
-            style={{ color: tintColor, fontSize: 22 }}
-          />
-        ),
-        drawerLabel: 'Podcasts',
-      },
-      screen: PodcastsScreen,
-    },
-
-    EventsScreen: {
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-globe"
-            style={{ color: tintColor, fontSize: 22 }}
-          />
-        ),
-        drawerLabel: 'Events',
-      },
-      screen: EventsScreen,
-    },
-  },
-
-  {
-    contentComponent: DrawerNavigator,
+const HomeStackScreen = () => {
+  function LogoTitle() {
+    return (
+      <Image
+        style={{ width: 38, height: 38, marginHorizontal: 10 }}
+        source={require('./assets/MOFO_Icon_500x500px.png')}
+      />
+    );
   }
 
-  // {
-  //   Index: IndexScreen,
-  //   Show: ShowScreen,
-  //   Create: CreateScreen,
-  //   Edit: EditScreen,
-  //   Layout: LayoutScreen,
-  //   Home: HomeScreen,
-  //   Insights: InsightsScreen,
-  // },
-  // {
-  //   initialRouteName: 'Home',
-  //   defaultNavigationOptions: {
-  //     title: 'Blogs',
-  //   },
-  // }
-);
+  return (
+    <HomeStack.Navigator initialRouteName="Home">
+      <HomeStack.Screen
+        name="Morrison &amp; Foerster"
+        component={HomeScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          headerLeft: (props) => <LogoTitle {...props} />,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#FFF"
+            />
+          ),
+        }}
+      />
+      <HomeStack.Screen
+        name="Insights"
+        component={InsightsDetail} //{InsightsScreen}
+        // options={({ route }) => ({ title: route.params.name })},
+
+        options={{
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          // title: ({ route }) => ({ title: route.params.name }),
+          headerTintColor: '#fff',
+          // headerLeft: (props) => <LogoTitle {...props} />,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#FFF"
+            />
+          ),
+        }}
+      />
+
+      <HomeStack.Screen
+        name="News"
+        component={IndexScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          // headerLeft: (props) => <LogoTitle {...props} />,
+          headerRight: () => (
+            <Button
+              onPress={() => alert('This is a button!')}
+              title="Info"
+              color="#FFF"
+            />
+          ),
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
+
+const Tab = createBottomTabNavigator();
+
+const AppTabs = () => {
+  return (
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarColor: ({ tintColor }) => (
+            <Ionicons name="ios-home" color={tintColor} size={25} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const Insight = createStackNavigator();
+const InsightsDetail = () => {
+  return (
+    <Insight.Navigator>
+      <Insight.Screen
+        name="InsightsList"
+        component={InsightsScreen}
+        options={{ title: 'TEST' }}
+      />
+      <Insight.Screen
+        name="Show"
+        component={ShowScreen}
+        options={{ title: 'TEST' }}
+        //options={({ route }) => ({ title: route.params.name })}
+      />
+    </Insight.Navigator>
+  );
+};
 
 const styles = StyleSheet.create({
   icon: {
@@ -134,12 +140,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = createAppContainer(navigator);
+// const App = createAppContainer(navigator);
 
-export default () => {
+// export default () => {
+//   return (
+//     <Provider>
+//       <App />
+//     </Provider>
+//   );
+// };
+
+export default function App() {
   return (
     <Provider>
-      <App />
+      <NavigationContainer>
+        <AppTabs />
+      </NavigationContainer>
     </Provider>
   );
-};
+}

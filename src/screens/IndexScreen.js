@@ -18,21 +18,18 @@ const IndexScreen = ({ navigation }) => {
 
   useEffect(() => {
     getNews();
-    const listener = navigation.addListener('didFocus', () => {
-      getNews();
-    });
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getNews();
+    // });
 
-    return () => {
-      listener.remove();
-    };
+    // return () => {
+    //   listener.remove();
+    // };
   }, []);
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never' }}
-    >
-      <Header navigation={navigation} label="In The News" />
+    <>
+      {/* <Header navigation={navigation} label="In The News" /> */}
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.id}
@@ -73,7 +70,7 @@ const IndexScreen = ({ navigation }) => {
           );
         }}
       />
-    </SafeAreaView>
+    </>
   );
 };
 

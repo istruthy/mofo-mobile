@@ -12,8 +12,9 @@ import Header from '../components/Header';
 import mofo from '../api/mofo';
 import { Feather, Ionicons } from '@expo/vector-icons';
 
-const InsightsScreen = ({ navigation }) => {
+const InsightsScreen = ({ navigation, route }) => {
   const [state, setState] = useState([]);
+  console.log('route ', route);
 
   const getInsights = async () => {
     let response = await mofo.get(
@@ -25,29 +26,54 @@ const InsightsScreen = ({ navigation }) => {
 
   useEffect(() => {
     getInsights();
-    const listener = navigation.addListener('didFocus', () => {
-      getInsights();
-    });
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getInsights();
+    // });
 
-    return () => {
-      listener.remove();
-    };
+    // return () => {
+    //   listener.remove();
+    // };
   }, []);
 
+  const handleOnPress = (id) => {
+    navigation.setOptions({ title: 'hello' });
+    navigation.push('Insights', {
+      screen: 'Show',
+      params: { id: id },
+    });
+  };
+
   return (
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
-    >
-      <Header navigation={navigation} />
+    <>
       <FlatList
         data={state}
         keyExtractor={(insight) => insight.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
+            // navigation.navigate('Root', {
+            //   screen: 'Settings',
+            //   params: { user: 'jane' },
+            // });
+
+            // navigation.navigate('Root', {
+            //   screen: 'Settings',
+            //   params: {
+            //     screen: 'Sound',
+            //     params: {
+            //       screen: 'Media',
+            //     },
+            //   },
+            // });
+
             <TouchableOpacity
-              onPress={() => navigation.navigate('ShowScreen', { id: item.id })}
+              onPress={
+                () => handleOnPress(item.id)
+                // navigation.push('Insights', {
+                //   screen: 'Show',
+                //   params: { id: item.id, title: 'hello' },
+                // })
+              }
             >
               <View style={styles.row}>
                 <View style={styles.column}>
@@ -75,7 +101,7 @@ const InsightsScreen = ({ navigation }) => {
           );
         }}
       />
-    </SafeAreaView>
+    </>
   );
 };
 

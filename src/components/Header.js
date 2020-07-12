@@ -24,6 +24,8 @@ const Header = ({ navigation, label }) => {
 const styles = StyleSheet.create({
   container: {
     // borderBottomWidth: 2,
+    marginTop: 0,
+    paddingTop: 0,
     height: 54,
     backgroundColor: '#1b4690',
     // borderColor: 'red',

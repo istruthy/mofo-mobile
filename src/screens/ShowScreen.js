@@ -15,10 +15,12 @@ import mofo from '../api/mofo';
 import HTML from 'react-native-render-html';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 
-const ShowScreen = ({ navigation }) => {
+const ShowScreen = ({ navigation, route }) => {
+  console.log('route showScreen ', route.params.id);
   const [content, setContent] = useState([]);
-  const id = navigation.getParam('id');
-  const label = navigation.getParam('label');
+  // const id = navigation.getParam('id');
+  const id = route.params.id;
+  // const label = navigation.getParam('label');
 
   const getContent = async (id) => {
     let response = await mofo.get(`/content-api?cid=${id}`);
@@ -33,11 +35,8 @@ const ShowScreen = ({ navigation }) => {
   const date = new Date(content.startDate).toString();
 
   return (
-    <SafeAreaView
-      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
-      style={{ flex: 1 }}
-    >
-      <Header navigation={navigation} label={label} />
+    <>
+      {/* <Header navigation={navigation} /> */}
       <View style={styles.headerContainer}>
         <View style={styles.sectionIcon}>
           <Text style={styles.sectionTitle}>In The News</Text>
@@ -74,7 +73,7 @@ const ShowScreen = ({ navigation }) => {
           }}
         />
       </ScrollView>
-    </SafeAreaView>
+    </>
   );
 };
 
