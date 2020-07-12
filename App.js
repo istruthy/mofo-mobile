@@ -1,8 +1,12 @@
 import React from 'react';
 import { StyleSheet, Button, Image } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // https://github.com/hmajid2301/articles/blob/master/11.%20React%20Navigation%20with%20React%20Native/source_code/src/MainApp.js
@@ -36,60 +40,28 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="Morrison &amp; Foerster"
         component={HomeScreen}
-        options={{
-          headerStyle: {
-            backgroundColor: '#184492',
-          },
-          headerTintColor: '#fff',
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
           headerLeft: (props) => <LogoTitle {...props} />,
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
-              color="#FFF"
-            />
-          ),
-        }}
-      />
-      <HomeStack.Screen
-        name="Insights"
-        component={InsightsDetail} //{InsightsScreen}
-        // options={({ route }) => ({ title: route.params.name })},
-
-        options={{
-          headerStyle: {
-            backgroundColor: '#184492',
-          },
-          // title: ({ route }) => ({ title: route.params.name }),
-          headerTintColor: '#fff',
-          // headerLeft: (props) => <LogoTitle {...props} />,
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
-              color="#FFF"
-            />
-          ),
-        }}
-      />
-
-      <HomeStack.Screen
-        name="News"
-        component={IndexScreen}
-        options={{
           headerStyle: {
             backgroundColor: '#184492',
           },
           headerTintColor: '#fff',
-          // headerLeft: (props) => <LogoTitle {...props} />,
           headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
+            <Ionicons
+              name="md-menu"
+              size={28}
               color="#FFF"
+              style={{ marginHorizontal: 10 }}
+              onPress={() => navigation.toggleDrawer()}
             />
           ),
-        }}
+        })}
       />
     </HomeStack.Navigator>
   );
@@ -114,22 +86,112 @@ const AppTabs = () => {
   );
 };
 
+const NewsStack = createStackNavigator();
+const NewsParent = () => {
+  return (
+    <NewsStack.Navigator>
+      <NewsStack.Screen
+        name="News"
+        component={NewsDetail}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          headerRight: () => (
+            <Ionicons
+              name="md-menu"
+              size={28}
+              color="#FFF"
+              style={{ marginHorizontal: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+    </NewsStack.Navigator>
+  );
+};
+
+const InsightParentStack = createStackNavigator();
+const InsightParent = () => {
+  return (
+    <InsightParentStack.Navigator>
+      <InsightParentStack.Screen
+        name="Insights"
+        component={InsightsDetail} //{InsightsScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          // headerLeft: ({ navigation: { goBack } }) => (
+          //   <HeaderBackButton onPress={() => goBack()} />
+          // ),
+          // title: ({ route }) => ({ title: route.params.name }),
+          headerTintColor: '#fff',
+          // headerLeft: (props) => <LogoTitle {...props} />,
+          headerRight: () => (
+            <Button
+              onPress={({ navigation }) => navigation.openDrawer()}
+              title="Info"
+              color="#FFF"
+            />
+          ),
+        }}
+      />
+    </InsightParentStack.Navigator>
+  );
+};
+
 const Insight = createStackNavigator();
 const InsightsDetail = () => {
   return (
     <Insight.Navigator>
       <Insight.Screen
-        name="InsightsList"
+        name="InsightsScreen"
         component={InsightsScreen}
-        options={{ title: 'TEST' }}
+        // options={({ navigation, route }) => ({
+        //   headerLeft: (props) => <LogoTitle {...props} />,
+        // })}
+        // options={{
+        //   headerLeft: ({ navigation: { goBack } }) => (
+        //     <HeaderBackButton onPress={() => goBack()} />
+        //   ),
+        // }}
       />
       <Insight.Screen
         name="Show"
         component={ShowScreen}
-        options={{ title: 'TEST' }}
+        options={{ title: 'Detail' }}
         //options={({ route }) => ({ title: route.params.name })}
       />
     </Insight.Navigator>
+  );
+};
+
+const NewsDetailStack = createStackNavigator();
+const NewsDetail = () => {
+  return (
+    <NewsDetailStack.Navigator>
+      <NewsDetailStack.Screen
+        name="IndexScreen"
+        component={IndexScreen}
+        options={{ title: 'List' }}
+      />
+      <NewsDetailStack.Screen
+        name="Show"
+        component={ShowScreen}
+        options={{ title: 'Detail' }}
+        //options={({ route }) => ({ title: route.params.name })}
+      />
+    </NewsDetailStack.Navigator>
   );
 };
 
@@ -140,21 +202,18 @@ const styles = StyleSheet.create({
   },
 });
 
-// const App = createAppContainer(navigator);
-
-// export default () => {
-//   return (
-//     <Provider>
-//       <App />
-//     </Provider>
-//   );
-// };
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <Provider>
       <NavigationContainer>
-        <AppTabs />
+        <Drawer.Navigator initialRouteName="Home">
+          <Drawer.Screen name="Home" component={AppTabs} />
+          <Drawer.Screen name="Insights" component={InsightParent} />
+          <Drawer.Screen name="News" component={NewsParent} />
+        </Drawer.Navigator>
+        {/* <AppTabs /> */}
       </NavigationContainer>
     </Provider>
   );

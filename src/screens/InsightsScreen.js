@@ -14,8 +14,7 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 
 const InsightsScreen = ({ navigation, route }) => {
   const [state, setState] = useState([]);
-  console.log('route ', route);
-
+  console.log('route insights', route);
   const getInsights = async () => {
     let response = await mofo.get(
       `/content-wss?id=1&type=MoFo Publications&wss=insights&cid=23461`
@@ -36,8 +35,8 @@ const InsightsScreen = ({ navigation, route }) => {
   }, []);
 
   const handleOnPress = (id) => {
-    navigation.setOptions({ title: 'hello' });
-    navigation.push('Insights', {
+    // navigation.setOptions({ title: 'hello' });
+    navigation.navigate('Insights', {
       screen: 'Show',
       params: { id: id },
     });
@@ -51,30 +50,7 @@ const InsightsScreen = ({ navigation, route }) => {
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
-            // navigation.navigate('Root', {
-            //   screen: 'Settings',
-            //   params: { user: 'jane' },
-            // });
-
-            // navigation.navigate('Root', {
-            //   screen: 'Settings',
-            //   params: {
-            //     screen: 'Sound',
-            //     params: {
-            //       screen: 'Media',
-            //     },
-            //   },
-            // });
-
-            <TouchableOpacity
-              onPress={
-                () => handleOnPress(item.id)
-                // navigation.push('Insights', {
-                //   screen: 'Show',
-                //   params: { id: item.id, title: 'hello' },
-                // })
-              }
-            >
+            <TouchableOpacity onPress={() => handleOnPress(item.id)}>
               <View style={styles.row}>
                 <View style={styles.column}>
                   <View style={styles.sectionIcon}>

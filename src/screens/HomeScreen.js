@@ -38,7 +38,6 @@ const HomeScreen = ({ navigation }) => {
               onPress={() =>
                 navigation.navigate('Insights', {
                   screen: 'InsightsScreen',
-                  // params: { id: 'news' },
                 })
               }
             >

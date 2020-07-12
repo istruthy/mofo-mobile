@@ -11,11 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const moment = require('moment');
 import { Context } from '../context/BlogContext';
 import { Feather, Ionicons } from '@expo/vector-icons';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 
-const IndexScreen = ({ navigation }) => {
+const IndexScreen = ({ navigation, route }) => {
   const { state, getNews } = useContext(Context);
-
+  console.log('route indexScreen', route);
   useEffect(() => {
     getNews();
     // const listener = navigation.addListener('didFocus', () => {
@@ -27,23 +27,24 @@ const IndexScreen = ({ navigation }) => {
     // };
   }, []);
 
+  const handleOnPress = (id) => {
+    console.log('news');
+    // navigation.setOptions({ title: 'Back' });
+    navigation.push('News', {
+      screen: 'Show',
+      params: { id: id },
+    });
+  };
+
   return (
     <>
-      {/* <Header navigation={navigation} label="In The News" /> */}
       <FlatList
         data={state}
-        keyExtractor={(blogPost) => blogPost.id}
+        keyExtractor={(blogPost) => blogPost.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('ShowScreen', {
-                  id: item.id,
-                  label: 'In The News',
-                })
-              }
-            >
+            <TouchableOpacity onPress={() => handleOnPress(item.id)}>
               <View style={styles.row}>
                 <View style={styles.column}>
                   <View style={styles.sectionIcon}>
