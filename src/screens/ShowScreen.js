@@ -13,6 +13,7 @@ const moment = require('moment');
 import mofo from '../api/mofo';
 import HTML from 'react-native-render-html';
 import { Entypo } from '@expo/vector-icons';
+// import BottomTabs from '../components/MaterialTab';
 
 const ShowScreen = ({ navigation, route }) => {
   const [content, setContent] = useState([]);

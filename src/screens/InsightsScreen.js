@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+
 const moment = require('moment');
 
 import mofo from '../api/mofo';
