@@ -10,7 +10,6 @@ import {
 const moment = require('moment');
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5 } from '@expo/vector-icons';
-import Header from '../components/Header';
 
 const blogs = [
   {
@@ -120,21 +119,17 @@ const BlogsScreen = ({ navigation }) => {
 
   useEffect(() => {
     getInsights();
-    const listener = navigation.addListener('didFocus', () => {
-      getInsights();
-    });
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getInsights();
+    // });
 
-    return () => {
-      listener.remove();
-    };
+    // return () => {
+    //   listener.remove();
+    // };
   }, []);
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
-    >
-      <Header navigation={navigation} />
+    <View style={styles.container}>
       <FlatList
         data={state}
         keyExtractor={(insight) => insight.id.toString()}
@@ -165,7 +160,7 @@ const BlogsScreen = ({ navigation }) => {
           );
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

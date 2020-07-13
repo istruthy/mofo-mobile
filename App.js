@@ -86,6 +86,92 @@ const AppTabs = () => {
   );
 };
 
+const PodcastDetailStack = createStackNavigator();
+const PodcastDetail = () => {
+  return (
+    <PodcastDetailStack.Navigator>
+      <PodcastDetailStack.Screen
+        name="Podcasts"
+        component={PodcastsScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'Podcasts',
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          headerRight: () => (
+            <Ionicons
+              name="md-menu"
+              size={28}
+              color="#FFF"
+              style={{ marginHorizontal: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+    </PodcastDetailStack.Navigator>
+  );
+};
+
+const BlogDetailStack = createStackNavigator();
+const BlogDetail = () => {
+  return (
+    <BlogDetailStack.Navigator>
+      <BlogDetailStack.Screen
+        name="Blogs"
+        component={BlogsScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          headerRight: () => (
+            <Ionicons
+              name="md-menu"
+              size={28}
+              color="#FFF"
+              style={{ marginHorizontal: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+
+      <BlogDetailStack.Screen
+        name="Show"
+        component={ShowScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'Blogs',
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+        })}
+      />
+    </BlogDetailStack.Navigator>
+  );
+};
+
 const InsightDetailStack = createStackNavigator();
 const InsightsDetail = () => {
   return (
@@ -205,6 +291,8 @@ export default function App() {
           <Drawer.Screen name="Home" component={AppTabs} />
           <Drawer.Screen name="Insights" component={InsightsDetail} />
           <Drawer.Screen name="News" component={NewsDetail} />
+          <Drawer.Screen name="Blogs" component={BlogDetail} />
+          <Drawer.Screen name="Podcasts" component={PodcastDetail} />
         </Drawer.Navigator>
         {/* <AppTabs /> */}
       </NavigationContainer>

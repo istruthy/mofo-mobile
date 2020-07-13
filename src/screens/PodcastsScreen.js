@@ -6,11 +6,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 const moment = require('moment');
-import Header from '../components/Header';
+
 import mofo from '../api/mofo';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const PodcastsScreen = ({ navigation }) => {
   const [state, setState] = useState([]);
@@ -25,57 +25,59 @@ const PodcastsScreen = ({ navigation }) => {
 
   useEffect(() => {
     getInsights();
-    const listener = navigation.addListener('didFocus', () => {
-      getInsights();
-    });
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getInsights();
+    // });
 
-    return () => {
-      listener.remove();
-    };
+    // return () => {
+    //   listener.remove();
+    // };
   }, []);
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
-    >
-      <Header navigation={navigation} />
-      <FlatList
-        data={state}
-        keyExtractor={(insight) => insight.id.toString()}
-        renderItem={({ item }) => {
-          const date = new Date(item.date).toString();
-          return (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ShowScreen', { id: item.id })}
-            >
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <View style={styles.sectionIcon}>
-                    <Ionicons
-                      name="ios-globe"
-                      size={22}
-                      style={{ marginRight: 8 }}
-                    />
-                    <Text style={styles.sectionTitle}>
-                      {item.type === 'MoFo News'
-                        ? 'in the news'
-                        : item.category}
-                    </Text>
-                  </View>
-                  <Text style={styles.title} key={item.title}>
-                    {item.title}
-                  </Text>
-                  <Text style={styles.date}>
-                    {moment(date).format('DD MMM YY')}
+    <FlatList
+      data={state}
+      keyExtractor={(podcast) => podcast.id.toString()}
+      renderItem={({ item }) => {
+        const date = new Date(item.date).toString();
+        return (
+          // navigation.navigate('Show', {
+          //   // screen: 'Show',
+          //   params: { id: id },
+          // });
+
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Show', {
+                // screen: 'Show',
+                params: { id: item.id },
+              })
+            }
+          >
+            <View style={styles.row}>
+              <View style={styles.column}>
+                <View style={styles.sectionIcon}>
+                  <Ionicons
+                    name="ios-globe"
+                    size={22}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text style={styles.sectionTitle}>
+                    {item.type === 'MoFo News' ? 'in the news' : item.category}
                   </Text>
                 </View>
+                <Text style={styles.title} key={item.title}>
+                  {item.title}
+                </Text>
+                <Text style={styles.date}>
+                  {moment(date).format('DD MMM YY')}
+                </Text>
               </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
-    </SafeAreaView>
+            </View>
+          </TouchableOpacity>
+        );
+      }}
+    />
   );
 };
 

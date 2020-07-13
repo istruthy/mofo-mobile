@@ -70,7 +70,10 @@ const HomeScreen = ({ navigation }) => {
             <TouchableOpacity
               style={styles.halfWidth}
               onPress={() =>
-                navigation.navigate('PodcastsScreen', { id: 'news' })
+                // navigation.navigate('PodcastsScreen', { id: 'news' })
+                navigation.navigate('Podcasts', {
+                  screen: 'PodcastsScreen',
+                })
               }
             >
               <IconBlock
@@ -81,7 +84,11 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.halfWidth}
-              onPress={() => navigation.navigate('BlogsScreen', { id: 'news' })}
+              onPress={() =>
+                navigation.navigate('Blogs', {
+                  screen: 'BlogsScreen',
+                })
+              }
             >
               <IconBlock label="Blogs" background="#001232" icon="newspaper" />
             </TouchableOpacity>
