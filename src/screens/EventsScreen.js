@@ -25,57 +25,54 @@ const EventsScreen = ({ navigation }) => {
 
   useEffect(() => {
     getInsights();
-    const listener = navigation.addListener('didFocus', () => {
-      getInsights();
-    });
+    // const listener = navigation.addListener('didFocus', () => {
+    //   getInsights();
+    // });
 
-    return () => {
-      listener.remove();
-    };
+    // return () => {
+    //   listener.remove();
+    // };
   }, [id]);
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never', bottom: 'always' }}
-    >
-      <Header navigation={navigation} />
-      <FlatList
-        data={state}
-        keyExtractor={(insight) => insight.id.toString()}
-        renderItem={({ item }) => {
-          const date = new Date(item.date).toString();
-          return (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ShowScreen', { id: item.id })}
-            >
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <View style={styles.sectionIcon}>
-                    <Ionicons
-                      name="ios-globe"
-                      size={22}
-                      style={{ marginRight: 8 }}
-                    />
-                    <Text style={styles.sectionTitle}>
-                      {item.type === 'MoFo News'
-                        ? 'in the news'
-                        : item.category}
-                    </Text>
-                  </View>
-                  <Text style={styles.title} key={item.title}>
-                    {item.title}
-                  </Text>
-                  <Text style={styles.date}>
-                    {moment(date).format('DD MMM YY')}
+    <FlatList
+      data={state}
+      keyExtractor={(insight) => insight.id.toString()}
+      renderItem={({ item }) => {
+        const date = new Date(item.date).toString();
+        return (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Show', {
+                // screen: 'Show',
+                params: { id: item.id },
+              })
+            }
+          >
+            <View style={styles.row}>
+              <View style={styles.column}>
+                <View style={styles.sectionIcon}>
+                  <Ionicons
+                    name="ios-globe"
+                    size={22}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text style={styles.sectionTitle}>
+                    {item.type === 'MoFo News' ? 'in the news' : item.category}
                   </Text>
                 </View>
+                <Text style={styles.title} key={item.title}>
+                  {item.title}
+                </Text>
+                <Text style={styles.date}>
+                  {moment(date).format('DD MMM YY')}
+                </Text>
               </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
-    </SafeAreaView>
+            </View>
+          </TouchableOpacity>
+        );
+      }}
+    />
   );
 };
 

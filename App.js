@@ -116,7 +116,77 @@ const PodcastDetail = () => {
           ),
         })}
       />
+
+      <PodcastDetailStack.Screen
+        name="Show"
+        component={ShowScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'Podcasts',
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+        })}
+      />
     </PodcastDetailStack.Navigator>
+  );
+};
+
+const EventDetailStack = createStackNavigator();
+const EventDetail = () => {
+  return (
+    <EventDetailStack.Navigator>
+      <EventDetailStack.Screen
+        name="Events"
+        component={EventsScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'Events',
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          headerRight: () => (
+            <Ionicons
+              name="md-menu"
+              size={28}
+              color="#FFF"
+              style={{ marginHorizontal: 10 }}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+
+      <EventDetailStack.Screen
+        name="Show"
+        component={ShowScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: 'Events',
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+        })}
+      />
+    </EventDetailStack.Navigator>
   );
 };
 
@@ -274,12 +344,12 @@ const NewsDetail = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
-});
+// const styles = StyleSheet.create({
+//   icon: {
+//     width: 24,
+//     height: 24,
+//   },
+// });
 
 const Drawer = createDrawerNavigator();
 
@@ -288,11 +358,12 @@ export default function App() {
     <Provider>
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={AppTabs} />
+          <Drawer.Screen name="Home" component={HomeStackScreen} />
           <Drawer.Screen name="Insights" component={InsightsDetail} />
           <Drawer.Screen name="News" component={NewsDetail} />
           <Drawer.Screen name="Blogs" component={BlogDetail} />
           <Drawer.Screen name="Podcasts" component={PodcastDetail} />
+          <Drawer.Screen name="Events" component={EventDetail} />
         </Drawer.Navigator>
         {/* <AppTabs /> */}
       </NavigationContainer>

@@ -6,9 +6,8 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 const moment = require('moment');
-import Header from '../components/Header';
+
 import mofo from '../api/mofo';
 import { Feather, Ionicons } from '@expo/vector-icons';
 
@@ -35,22 +34,10 @@ const InsightsScreen = ({ navigation, route }) => {
   }, []);
 
   const handleOnPress = (id) => {
-    // navigation.reset({
-    //   routes: [{ name: LOGIN_SCREEN }]
-    // });
-    // navigation.setOptions({ title: 'hello' });
     navigation.navigate('Show', {
-      // screen: 'Show',
       params: { id: id },
     });
   };
-
-  // console.log('news');
-  // // navigation.setOptions({ title: 'Back' });
-  // navigation.navigate('Show', {
-  //   // screen: 'Show',
-  //   params: { id: id },
-  // });
 
   return (
     <>

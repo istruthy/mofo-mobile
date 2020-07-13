@@ -38,7 +38,7 @@ const ShowScreen = ({ navigation, route }) => {
   return (
     <>
       {loadingItems ? (
-        <View>
+        <View style={{ flex: 1 }}>
           <View style={styles.headerContainer}>
             <View style={styles.sectionIcon}>
               <Text style={styles.sectionTitle}>In The News</Text>
