@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Button, Image } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -21,7 +21,8 @@ import InsightsScreen from './src/screens/InsightsScreen';
 import BlogsScreen from './src/screens/BlogsScreen';
 import PodcastsScreen from './src/screens/PodcastsScreen';
 import EventsScreen from './src/screens/EventsScreen';
-import { Ionicons } from '@expo/vector-icons';
+import DemoScreen from './src/screens/DemoScreen';
+import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 
 const HomeStack = createStackNavigator();
 
@@ -242,6 +243,87 @@ const BlogDetail = () => {
   );
 };
 
+const CommonTabNavigator = createMaterialBottomTabNavigator(); // createBottomTabNavigator();
+
+const CommonTabScreen = () => {
+  return (
+    <CommonTabNavigator.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: 'message-text-outline',
+      })}
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+      }}
+    >
+      <CommonTabNavigator.Screen
+        name="ShowTab"
+        component={ShowScreen}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <HeaderBackButton
+              tintColor="#fff"
+              onPress={() => navigation.goBack()}
+            />
+          ),
+          title: route.params.category,
+          headerStyle: {
+            backgroundColor: '#184492',
+          },
+          headerTintColor: '#fff',
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="More Info" color={color} size={26} />
+          ),
+        })}
+      />
+      <CommonTabNavigator.Screen
+        name="Authors"
+        options={{
+          tabBarLabel: 'Save',
+          tabBarIcon: ({ color }) => (
+            <Feather name="users" color={color} size={26} />
+          ),
+        }}
+        component={DemoScreen}
+      />
+      <CommonTabNavigator.Screen
+        name="Practices"
+        options={{
+          tabBarLabel: 'Share',
+          tabBarIcon: ({ color }) => (
+            <Feather name="users" color={color} size={26} />
+          ),
+        }}
+        component={DemoScreen}
+      />
+    </CommonTabNavigator.Navigator>
+  );
+};
+
+const CommonDetailStack = createStackNavigator();
+const CommonDetail = () => {
+  return (
+    <CommonDetailStack.Screen
+      name="Show"
+      component={ShowScreen}
+      options={({ navigation, route }) => ({
+        headerLeft: (props) => (
+          <HeaderBackButton
+            tintColor="#fff"
+            onPress={() => navigation.goBack()}
+          />
+        ),
+        title: route.params.category,
+        headerStyle: {
+          backgroundColor: '#184492',
+        },
+        headerTintColor: '#fff',
+      })}
+    />
+  );
+};
+
 const InsightDetailStack = createStackNavigator();
 const InsightsDetail = () => {
   return (
@@ -272,9 +354,10 @@ const InsightsDetail = () => {
           ),
         })}
       />
+
       <InsightDetailStack.Screen
         name="Show"
-        component={ShowScreen}
+        component={ShowScreen} //CommonTabScreen
         options={({ navigation, route }) => ({
           headerLeft: (props) => (
             <HeaderBackButton
@@ -282,7 +365,7 @@ const InsightsDetail = () => {
               onPress={() => navigation.goBack()}
             />
           ),
-          title: 'Insights',
+          title: route.params.category,
           headerStyle: {
             backgroundColor: '#184492',
           },

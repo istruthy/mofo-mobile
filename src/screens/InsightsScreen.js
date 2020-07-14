@@ -20,6 +20,7 @@ const InsightsScreen = ({ navigation, route }) => {
       `/content-wss?id=1&type=MoFo Publications&wss=insights&cid=23461`
     );
     let data = response.data;
+    // console.log(data);
     setState(data);
   };
 
@@ -34,8 +35,13 @@ const InsightsScreen = ({ navigation, route }) => {
     // };
   }, []);
 
-  const handleOnPress = (id) => {
+  const handleOnPress = (id, category) => {
+    // navigation.navigate('Show', {
+    //   screen: 'ShowTab',
+    //   params: { id: id },
+
     navigation.navigate('Show', {
+      category: category,
       params: { id: id },
     });
   };
@@ -48,7 +54,9 @@ const InsightsScreen = ({ navigation, route }) => {
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
-            <TouchableOpacity onPress={() => handleOnPress(item.id)}>
+            <TouchableOpacity
+              onPress={() => handleOnPress(item.id, item.category)}
+            >
               <View style={styles.row}>
                 <View style={styles.column}>
                   <View style={styles.sectionIcon}>

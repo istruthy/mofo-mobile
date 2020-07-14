@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
   View,
   Text,
@@ -19,6 +20,8 @@ const ShowScreen = ({ navigation, route }) => {
   const [content, setContent] = useState([]);
   const [loadingItems, setLoadingItems] = useState(false);
   //todo why is this nested
+  console.log('route', route);
+  // const id = route.params.id; to do when add footer tab
   const id = route.params.params.id;
 
   const getContent = async (id) => {
@@ -28,6 +31,7 @@ const ShowScreen = ({ navigation, route }) => {
       ...data,
       subtitle: `<p>${data.subtitle}</p>`,
     });
+    console.log('content ----- ', data);
     setLoadingItems(true);
   };
 
@@ -42,7 +46,11 @@ const ShowScreen = ({ navigation, route }) => {
         <View style={{ flex: 1 }}>
           <View style={styles.headerContainer}>
             <View style={styles.sectionIcon}>
-              <Text style={styles.sectionTitle}>In The News</Text>
+              <Text style={styles.sectionTitle}>
+                {content.type === 'MoFo News'
+                  ? 'in the news'
+                  : content.category}
+              </Text>
             </View>
 
             <Text style={styles.headline}>{content.title}</Text>
@@ -77,11 +85,11 @@ const ShowScreen = ({ navigation, route }) => {
           </ScrollView>
         </View>
       ) : (
-        <View>
+        <View style={styles.container}>
           <ActivityIndicator
             size="large"
             color="black"
-            style={styles.loading}
+            style={[styles.loadingContainer, styles.loadingHorizontal]}
           />
         </View>
       )}
@@ -89,30 +97,35 @@ const ShowScreen = ({ navigation, route }) => {
   );
 };
 
-ShowScreen.navigationOptions = ({ navigation }) => {
-  return {
-    headerRight: () => (
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('Edit', { id: navigation.getParam('id') })
-        }
-      >
-        <Entypo name="menu" size={35} />
-      </TouchableOpacity>
-    ),
-  };
-};
+// ShowScreen.navigationOptions = ({ navigation }) => {
+//   return {
+//     headerRight: () => (
+//       <TouchableOpacity
+//         onPress={() =>
+//           navigation.navigate('Edit', { id: navigation.getParam('id') })
+//         }
+//       >
+//         <Entypo name="menu" size={35} />
+//       </TouchableOpacity>
+//     ),
+//   };
+// };
 
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
-  },
-  loading: {
-    flexDirection: 'column',
     flex: 1,
-    alignSelf: 'stretch',
-    borderColor: 'black',
-    borderWidth: 2,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    // borderColor: 'black',
+    // borderWidth: 2,
+  },
+  loadingHorizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
 
   headline: {

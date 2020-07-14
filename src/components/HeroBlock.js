@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import mofo from '../api/mofo';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 
 const HeroBlock = () => {
   const [state, setState] = useState({});
