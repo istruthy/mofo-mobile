@@ -12,6 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // https://github.com/hmajid2301/articles/blob/master/11.%20React%20Navigation%20with%20React%20Native/source_code/src/MainApp.js
 import IndexScreen from './src/screens/IndexScreen';
 import { Provider } from './src/context/BlogContext';
+import { Provider as ContentProvider } from './src/context/ContentContext';
 import ShowScreen from './src/screens/ShowScreen';
 import CreateScreen from './src/screens/CreateScreen';
 import LayoutScreen from './src/screens/LayoutScreen';
@@ -22,7 +23,16 @@ import BlogsScreen from './src/screens/BlogsScreen';
 import PodcastsScreen from './src/screens/PodcastsScreen';
 import EventsScreen from './src/screens/EventsScreen';
 import DemoScreen from './src/screens/DemoScreen';
-import { Ionicons, MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import EventsDetailScreen from './src/screens/EventsDetailScreen';
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  Feather,
+  EvilIcons,
+  Entypo,
+} from '@expo/vector-icons';
+
+console.disableYellowBox = true;
 
 const HomeStack = createStackNavigator();
 
@@ -172,7 +182,7 @@ const EventDetail = () => {
 
       <EventDetailStack.Screen
         name="Show"
-        component={ShowScreen}
+        component={EventsDetailScreen}
         options={({ navigation, route }) => ({
           headerLeft: (props) => (
             <HeaderBackButton
@@ -266,21 +276,25 @@ const CommonTabScreen = () => {
               onPress={() => navigation.goBack()}
             />
           ),
-          title: route.params.category,
+          title: 'xx', //route.params.category,
           headerStyle: {
             backgroundColor: '#184492',
           },
           headerTintColor: '#fff',
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Read',
           tabBarIcon: ({ color }) => (
-            <Ionicons name="More Info" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="eye-outline"
+              color={color}
+              size={26}
+            />
           ),
         })}
       />
       <CommonTabNavigator.Screen
         name="Authors"
         options={{
-          tabBarLabel: 'Save',
+          tabBarLabel: 'Contributors',
           tabBarIcon: ({ color }) => (
             <Feather name="users" color={color} size={26} />
           ),
@@ -292,7 +306,7 @@ const CommonTabScreen = () => {
         options={{
           tabBarLabel: 'Share',
           tabBarIcon: ({ color }) => (
-            <Feather name="users" color={color} size={26} />
+            <EvilIcons name="share-apple" color={color} size={26} />
           ),
         }}
         component={DemoScreen}
@@ -314,7 +328,7 @@ const CommonDetail = () => {
             onPress={() => navigation.goBack()}
           />
         ),
-        title: route.params.category,
+        title: 'dd', //route.params.category,
         headerStyle: {
           backgroundColor: '#184492',
         },
@@ -357,7 +371,7 @@ const InsightsDetail = () => {
 
       <InsightDetailStack.Screen
         name="Show"
-        component={ShowScreen} //CommonTabScreen
+        component={CommonTabScreen} //CommonTabScreen // ShowScreen
         options={({ navigation, route }) => ({
           headerLeft: (props) => (
             <HeaderBackButton
@@ -439,17 +453,20 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <Provider>
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={HomeStackScreen} />
-          <Drawer.Screen name="Insights" component={InsightsDetail} />
-          <Drawer.Screen name="News" component={NewsDetail} />
-          <Drawer.Screen name="Blogs" component={BlogDetail} />
-          <Drawer.Screen name="Podcasts" component={PodcastDetail} />
-          <Drawer.Screen name="Events" component={EventDetail} />
-        </Drawer.Navigator>
-        {/* <AppTabs /> */}
-      </NavigationContainer>
+      <ContentProvider>
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" component={HomeStackScreen} />
+            <Drawer.Screen name="Insights" component={InsightsDetail} />
+            {/* InsightDeail */}
+            <Drawer.Screen name="News" component={NewsDetail} />
+            <Drawer.Screen name="Blogs" component={BlogDetail} />
+            <Drawer.Screen name="Podcasts" component={PodcastDetail} />
+            <Drawer.Screen name="Events" component={EventDetail} />
+          </Drawer.Navigator>
+          {/* <AppTabs /> */}
+        </NavigationContainer>
+      </ContentProvider>
     </Provider>
   );
 }

@@ -13,7 +13,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation, route }) => {
   const { state, getNews } = useContext(Context);
-
+  // console.log('route ', route);
+  // console.log('state ', state);
   useEffect(() => {
     getNews();
     // const listener = navigation.addListener('didFocus', () => {
@@ -25,7 +26,8 @@ const IndexScreen = ({ navigation, route }) => {
   }, []);
 
   const handleOnPress = (id) => {
-    navigation.navigate('Show', {
+    navigation.navigate('News', {
+      screen: 'Show',
       params: { id: id },
     });
   };

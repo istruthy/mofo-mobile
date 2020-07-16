@@ -25,7 +25,7 @@ const ShowScreen = ({ navigation, route }) => {
   //todo why is this nested
   console.log('route===============>', route);
   // const id = route.params.id; to do when add footer tab
-  const id = route.params.id; // route.params.params.id
+  const id = route.params.params.id; // route.params.params.id
 
   const getContent = async (id) => {
     let response = await mofo.get(`/content-api?cid=${id}&t=insights`);

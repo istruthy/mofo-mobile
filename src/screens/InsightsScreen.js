@@ -14,7 +14,7 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 
 const InsightsScreen = ({ navigation, route }) => {
   const [state, setState] = useState([]);
-  console.log('route insights', route);
+  // console.log('route insights', route);
   const getInsights = async () => {
     let response = await mofo.get(
       `/content-wss?id=1&type=MoFo Publications&wss=insights&cid=23461`
@@ -36,13 +36,14 @@ const InsightsScreen = ({ navigation, route }) => {
   }, []);
 
   const handleOnPress = (id, category) => {
-    // navigation.navigate('Show', {
-    //   screen: 'ShowTab',
-    //   params: { id: id },
-
     navigation.navigate('Show', {
       category: category,
+      screen: 'ShowTab',
+
+      // navigation.navigate('Show', {
+      //   category: category,
       params: { id: id },
+      // });
     });
   };
 

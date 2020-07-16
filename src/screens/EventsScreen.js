@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const moment = require('moment');
 import Header from '../components/Header';
 import mofo from '../api/mofo';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons, EvilIcons } from '@expo/vector-icons';
 
 const EventsScreen = ({ navigation }) => {
   const [state, setState] = useState([]);
@@ -25,14 +25,7 @@ const EventsScreen = ({ navigation }) => {
 
   useEffect(() => {
     getInsights();
-    // const listener = navigation.addListener('didFocus', () => {
-    //   getInsights();
-    // });
-
-    // return () => {
-    //   listener.remove();
-    // };
-  }, [id]);
+  }, []);
 
   return (
     <FlatList
@@ -44,7 +37,7 @@ const EventsScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Show', {
-                // screen: 'Show',
+                screen: 'Show',
                 params: { id: item.id },
               })
             }

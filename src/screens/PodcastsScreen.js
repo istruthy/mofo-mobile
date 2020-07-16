@@ -49,8 +49,11 @@ const PodcastsScreen = ({ navigation }) => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Show', {
-                // screen: 'Show',
                 params: { id: item.id },
+
+                // navigation.navigate('Show', {
+                //   category: category,
+                //   screen: 'ShowTab',
               })
             }
           >
