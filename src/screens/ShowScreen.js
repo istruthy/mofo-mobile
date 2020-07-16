@@ -9,7 +9,7 @@ import {
   Linking,
   ActivityIndicator,
 } from 'react-native';
-
+import { RFValue } from 'react-native-responsive-fontsize';
 const moment = require('moment');
 import mofo from '../api/mofo';
 import HTML from 'react-native-render-html';
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
 
   headline: {
-    fontSize: 24,
+    fontSize: RFValue(20),
     fontFamily: 'Verdana',
     fontWeight: '600',
     marginBottom: 10,
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   date: {
     color: '#FFF',
-    fontSize: 16,
+    fontSize: RFValue(14),
     fontFamily: 'Verdana',
   },
 });

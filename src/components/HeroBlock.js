@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import mofo from '../api/mofo';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
-
+import { RFValue } from 'react-native-responsive-fontsize';
 const HeroBlock = () => {
   const [state, setState] = useState({});
 
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   headline: {
-    fontSize: 32,
+    fontSize: RFValue(28),
     color: '#fff',
     fontFamily: 'Georgia',
     fontWeight: '600',
   },
   byline: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     color: '#fff',
   },
   buttonStyle: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 14,
+    fontSize: RFValue(12),
     padding: 10,
     fontWeight: '800',
     textAlign: 'center',

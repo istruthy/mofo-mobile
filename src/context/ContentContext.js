@@ -1,5 +1,6 @@
 import createDataContext from './createDataContext';
-import mofo from '../api/mofo';
+// import mofo from '../api/mofo';
+import axios from 'axios';
 
 const contentReducer = (state, action) => {
   switch (action.type) {
@@ -21,7 +22,9 @@ const getPeople = (dispatch) => {
     for (let i = 0; i < people.length; i++) {
       // for (const item in people) {
 
-      const response = await mofo.get(`/content-people-api?cid=${people[i]}`);
+      const response = await axios.get(
+        `https://friendly-lewin-148c08.netlify.app/.netlify/functions/hello/${people[i]}`
+      );
       results.push(response.data);
     }
     // const response = await mofo.get(`/content-people-api?cid=${people[0]}`);

@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-
+import { RFValue } from 'react-native-responsive-fontsize';
 const moment = require('moment');
 
 import mofo from '../api/mofo';
@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 22,
+    fontSize: RFValue(18),
+    fontFamily: 'Verdana',
     color: 'grey',
     fontWeight: 'bold',
     marginBottom: 12,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     textTransform: 'uppercase',
-    fontSize: 14,
+    fontSize: RFValue(12),
     fontWeight: 'bold',
     color: 'grey',
     fontFamily: 'Verdana',
@@ -133,6 +134,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   date: {
+    fontSize: RFValue(12),
     color: 'grey',
   },
   container: {

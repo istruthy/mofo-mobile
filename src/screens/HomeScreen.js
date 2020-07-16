@@ -9,6 +9,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';
 // import { Context } from '../context/BlogContext';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
 import IconBlock from '../components/IconBlock';
 import IconBlockImage from '../components/IconBlogImage';
 import HeroBlock from '../components/HeroBlock';
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   headline: {
-    fontSize: 32,
+    fontSize: RFValue(12),
     color: '#fff',
     fontFamily: 'Georgia',
     fontWeight: '600',
