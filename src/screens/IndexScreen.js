@@ -6,6 +6,8 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const moment = require('moment');
 import { Context } from '../context/BlogContext';
@@ -13,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation, route }) => {
   const { state, getNews } = useContext(Context);
+  const [refresh, setRefresh] = useState(false);
   const [seed, setSeed] = useState(0);
   useEffect(() => {
     getNews();
@@ -32,15 +35,17 @@ const IndexScreen = ({ navigation, route }) => {
   };
 
   const handleRefresh = () => {
-    setRefresh(true);
+    setRefresh(false);
     setSeed(seed + 1);
     getNews();
   };
 
   return (
-    <>
+    <SafeAreaView edges={2} style={styles.container}>
       <FlatList
         data={state}
+        refreshing={refresh}
+        onRefresh={handleRefresh}
         keyExtractor={(blogPost) => blogPost.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
@@ -72,7 +77,7 @@ const IndexScreen = ({ navigation, route }) => {
           );
         }}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -90,7 +95,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 22,
+    fontSize: RFValue(16),
+    fontFamily: 'Verdana',
     color: 'grey',
     fontWeight: 'bold',
     marginBottom: 12,
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     textTransform: 'uppercase',
-    fontSize: 14,
+    fontSize: RFValue(12),
     fontWeight: 'bold',
     color: 'grey',
     fontFamily: 'Verdana',
@@ -111,10 +117,12 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   date: {
+    fontSize: RFValue(12),
     color: 'grey',
   },
   container: {
     flexDirection: 'column',
+    marginTop: 0,
     flex: 1,
   },
 });

@@ -9,6 +9,7 @@ import {
 import { RFValue } from 'react-native-responsive-fontsize';
 import mofo from '../api/mofo';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const moment = require('moment');
 
@@ -52,7 +53,7 @@ const InsightsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <>
+    <SafeAreaView edges={2} style={styles.container}>
       <FlatList
         data={state}
         refreshing={refresh}
@@ -90,7 +91,7 @@ const InsightsScreen = ({ navigation, route }) => {
           );
         }}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: RFValue(18),
+    fontSize: RFValue(16),
     fontFamily: 'Verdana',
     color: 'grey',
     fontWeight: 'bold',

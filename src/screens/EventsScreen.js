@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 22,
+    fontSize: RFValue(16),
     color: 'grey',
     fontWeight: 'bold',
     marginBottom: 12,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     textTransform: 'uppercase',
-    fontSize: 14,
+    fontSize: RFValue(12),
     fontWeight: 'bold',
     color: 'grey',
     fontFamily: 'Verdana',
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   date: {
+    fontSize: RFValue(12),
     color: 'grey',
   },
   container: {
