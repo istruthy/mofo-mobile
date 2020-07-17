@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation, route }) => {
   const { state, getNews } = useContext(Context);
-  const [refresh, setRefresh] = useState(true);
   const [seed, setSeed] = useState(0);
   useEffect(() => {
     getNews();
@@ -42,8 +41,6 @@ const IndexScreen = ({ navigation, route }) => {
     <>
       <FlatList
         data={state}
-        refreshing={refresh}
-        onRefresh={handleRefresh}
         keyExtractor={(blogPost) => blogPost.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
