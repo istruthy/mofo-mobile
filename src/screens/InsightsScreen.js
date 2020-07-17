@@ -7,20 +7,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-const moment = require('moment');
-
 import mofo from '../api/mofo';
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+
+const moment = require('moment');
 
 const InsightsScreen = ({ navigation, route }) => {
   const [state, setState] = useState([]);
-  // console.log('route insights', route);
+  const [refresh, setRefresh] = useState(false);
+  const [seed, setSeed] = useState(0);
+
   const getInsights = async () => {
     let response = await mofo.get(
       `/content-wss?id=1&type=MoFo Publications&wss=insights&cid=23461`
     );
     let data = response.data;
-    // console.log(data);
+    setRefresh(false);
     setState(data);
   };
 
@@ -39,18 +41,22 @@ const InsightsScreen = ({ navigation, route }) => {
     navigation.navigate('Show', {
       category: category,
       screen: 'ShowTab',
-
-      // navigation.navigate('Show', {
-      //   category: category,
       params: { id: id },
-      // });
     });
+  };
+
+  const handleRefresh = () => {
+    setRefresh(true);
+    setSeed(seed + 1);
+    getInsights();
   };
 
   return (
     <>
       <FlatList
         data={state}
+        refreshing={refresh}
+        onRefresh={handleRefresh}
         keyExtractor={(insight) => insight.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
@@ -87,16 +93,6 @@ const InsightsScreen = ({ navigation, route }) => {
     </>
   );
 };
-
-// InsightsScreen.navigationOptions = ({ navigation }) => {
-//   return {
-//     headerRight: () => (
-//       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-//         <Feather name="plus" size={30} />
-//       </TouchableOpacity>
-//     ),
-//   };
-// };
 
 const styles = StyleSheet.create({
   row: {

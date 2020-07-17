@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Button, Image } from 'react-native';
+import { Image } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,9 +14,6 @@ import IndexScreen from './src/screens/IndexScreen';
 import { Provider } from './src/context/BlogContext';
 import { Provider as ContentProvider } from './src/context/ContentContext';
 import ShowScreen from './src/screens/ShowScreen';
-import CreateScreen from './src/screens/CreateScreen';
-import LayoutScreen from './src/screens/LayoutScreen';
-import EditScreen from './src/screens/EditScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import InsightsScreen from './src/screens/InsightsScreen';
 import BlogsScreen from './src/screens/BlogsScreen';
@@ -29,9 +26,9 @@ import {
   MaterialCommunityIcons,
   Feather,
   EvilIcons,
-  Entypo,
 } from '@expo/vector-icons';
 
+// stop visually showing the errors
 console.disableYellowBox = true;
 
 const HomeStack = createStackNavigator();
@@ -441,13 +438,6 @@ const NewsDetail = () => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   icon: {
-//     width: 24,
-//     height: 24,
-//   },
-// });
-
 const Drawer = createDrawerNavigator();
 
 export default function App() {
@@ -470,5 +460,3 @@ export default function App() {
     </Provider>
   );
 }
-
-// navigation.popToTop();

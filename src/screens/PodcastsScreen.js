@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   View,
   Text,
@@ -25,13 +26,6 @@ const PodcastsScreen = ({ navigation }) => {
 
   useEffect(() => {
     getInsights();
-    // const listener = navigation.addListener('didFocus', () => {
-    //   getInsights();
-    // });
-
-    // return () => {
-    //   listener.remove();
-    // };
   }, []);
 
   return (
@@ -41,19 +35,10 @@ const PodcastsScreen = ({ navigation }) => {
       renderItem={({ item }) => {
         const date = new Date(item.date).toString();
         return (
-          // navigation.navigate('Show', {
-          //   // screen: 'Show',
-          //   params: { id: id },
-          // });
-
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Show', {
                 params: { id: item.id },
-
-                // navigation.navigate('Show', {
-                //   category: category,
-                //   screen: 'ShowTab',
               })
             }
           >
@@ -84,16 +69,6 @@ const PodcastsScreen = ({ navigation }) => {
   );
 };
 
-// InsightsScreen.navigationOptions = ({ navigation }) => {
-//   return {
-//     headerRight: () => (
-//       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-//         <Feather name="plus" size={30} />
-//       </TouchableOpacity>
-//     ),
-//   };
-// };
-
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
@@ -108,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 22,
+    fontSize: RFValue(18),
     color: 'grey',
     fontWeight: 'bold',
     marginBottom: 12,

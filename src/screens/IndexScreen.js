@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,8 +13,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation, route }) => {
   const { state, getNews } = useContext(Context);
-  // console.log('route ', route);
-  // console.log('state ', state);
+  const [refresh, setRefresh] = useState(true);
+  const [seed, setSeed] = useState(0);
   useEffect(() => {
     getNews();
     // const listener = navigation.addListener('didFocus', () => {
@@ -32,10 +32,18 @@ const IndexScreen = ({ navigation, route }) => {
     });
   };
 
+  const handleRefresh = () => {
+    setRefresh(true);
+    setSeed(seed + 1);
+    getNews();
+  };
+
   return (
     <>
       <FlatList
         data={state}
+        refreshing={refresh}
+        onRefresh={handleRefresh}
         keyExtractor={(blogPost) => blogPost.id.toString()}
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
@@ -70,16 +78,6 @@ const IndexScreen = ({ navigation, route }) => {
     </>
   );
 };
-
-// IndexScreen.navigationOptions = ({ navigation }) => {
-//   return {
-//     headerRight: () => (
-//       <TouchableOpacity onPress={() => navigation.navigate('Create')}>
-//         <Feather name="plus" size={30} />
-//       </TouchableOpacity>
-//     ),
-//   };
-// };
 
 const styles = StyleSheet.create({
   row: {
