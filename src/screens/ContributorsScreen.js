@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import { Context } from '../context/ContentContext';
-
+import { MaterialIcons, Foundation } from '@expo/vector-icons';
 const DemoScreen = ({ navigation, route }) => {
   const { state, getPeople } = useContext(Context);
   console.log('demo screen state', state);
@@ -24,9 +24,20 @@ const DemoScreen = ({ navigation, route }) => {
                 }}
                 style={styles.imageStyle}
               />
-              <View>
-                <Text style={styles.textStyle}>{item.fullname}</Text>
-                <Text style={styles.positionStyle}>{item.type}</Text>
+
+              <View style={styles.column}>
+                <View>
+                  <Text style={styles.textStyle}>{item.fullname}</Text>
+                  <Text style={styles.positionStyle}>{item.type}</Text>
+                </View>
+                <View style={styles.row}>
+                  <Text style={styles.textLeft}>
+                    <MaterialIcons name="web" style={styles.socialIcons} />
+                  </Text>
+                  <Text style={styles.textRight}>
+                    <Foundation name="telephone" style={styles.socialIcons} />
+                  </Text>
+                </View>
               </View>
             </View>
           );
@@ -71,5 +82,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
     color: '#fff',
     fontFamily: 'Verdana',
+  },
+  column: {
+    flexDirection: 'column',
+  },
+  row: {
+    marginHorizontal: 18,
+    marginVertical: 10,
+    flexDirection: 'row',
+  },
+  textLeft: {
+    marginRight: 14,
+    color: '#fff',
+  },
+  textRight: {
+    color: '#fff',
+  },
+  socialIcons: {
+    fontSize: 24,
   },
 });

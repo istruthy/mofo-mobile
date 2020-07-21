@@ -11,6 +11,7 @@ const moment = require('moment');
 import Header from '../components/Header';
 import mofo from '../api/mofo';
 import { Feather, Ionicons, EvilIcons } from '@expo/vector-icons';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const EventsScreen = ({ navigation }) => {
   const [state, setState] = useState([]);

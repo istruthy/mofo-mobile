@@ -19,7 +19,7 @@ import InsightsScreen from './src/screens/InsightsScreen';
 import BlogsScreen from './src/screens/BlogsScreen';
 import PodcastsScreen from './src/screens/PodcastsScreen';
 import EventsScreen from './src/screens/EventsScreen';
-import DemoScreen from './src/screens/DemoScreen';
+import DemoScreen from './src/screens/ContributorsScreen';
 import EventsDetailScreen from './src/screens/EventsDetailScreen';
 import {
   Ionicons,
@@ -419,7 +419,7 @@ const NewsDetail = () => {
       />
       <NewsDetailStack.Screen
         name="Show"
-        component={ShowScreen}
+        component={CommonTabScreen}
         options={({ navigation, route }) => ({
           headerLeft: (props) => (
             <HeaderBackButton

@@ -27,9 +27,10 @@ const IndexScreen = ({ navigation, route }) => {
     // };
   }, []);
 
-  const handleOnPress = (id) => {
-    navigation.navigate('News', {
-      screen: 'Show',
+  const handleOnPress = (id, category) => {
+    navigation.navigate('Show', {
+      category: category,
+      screen: 'ShowTab',
       params: { id: id },
     });
   };
@@ -50,7 +51,9 @@ const IndexScreen = ({ navigation, route }) => {
         renderItem={({ item }) => {
           const date = new Date(item.date).toString();
           return (
-            <TouchableOpacity onPress={() => handleOnPress(item.id)}>
+            <TouchableOpacity
+              onPress={() => handleOnPress(item.id, item.category)}
+            >
               <View style={styles.row}>
                 <View style={styles.column}>
                   <View style={styles.sectionIcon}>
